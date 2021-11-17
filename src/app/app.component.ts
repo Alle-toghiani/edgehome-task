@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
  categories = []
 
   ngOnInit(){
-  this.categories = [];
+
   Object.keys(faker).forEach(element => {
     this.categories.push({title: element, data: Object.keys(faker[element])});
   })
@@ -23,6 +23,13 @@ export class AppComponent implements OnInit {
     ( element.title !=='commerce')
   )
   this.categories[14].data = this.categories[14].data.slice(0,3);
+  // this.categories = this.categories.sort((a,b)=> {
+  //   return b.title === 'image'? 1 : -1;
+  // })
+  let arraySwapTemp = this.categories[10];
+  console.log(this.categories);
+  this.categories[10] = this.categories[14];
+  this.categories[14] = arraySwapTemp;
   // let rowsCount = 0;
 let exitLoop = false;
   loop1:
@@ -36,7 +43,7 @@ for(let rowsCount = 0 ; rowsCount<199;){
               for (let subCat = 0; subCat< this.categories[categoryIndex].data.length; subCat++){
               let temp1 = faker.fake(`{{${this.categories[categoryIndex].title}.${this.categories[categoryIndex].data[subCat]}}}`);
               
-              if (this.categories[categoryIndex].title !== 'imageUrl'){
+              if (categoryIndex > 10){
                 row[this.categories[categoryIndex].data[subCat]] = temp1.substring(0, 10);
               } else {
                 row[this.categories[categoryIndex].data[subCat]] = temp1;
@@ -61,6 +68,7 @@ for(let rowsCount = 0 ; rowsCount<199;){
     Object.keys(this.dataset[0]).forEach(header => {
       this.columnDefs.push({headerName: header, field: header});
     })
+    console.log(this.columnDefs);
   }
 }
 
