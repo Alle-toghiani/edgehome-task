@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as faker from 'faker';
 import { address } from 'faker';
-
+import { AppImageFormatterCellComponent } from './app-image-formatter-cell/app-image-formatter-cell.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   this.categories = this.categories.filter( element =>
     ( element.title !=='commerce')
   )
-  this.categories[14].data = this.categories[14].data.slice(0,3);
+  this.categories[14].data = this.categories[14].data.slice(0,1);
   // this.categories = this.categories.sort((a,b)=> {
   //   return b.title === 'image'? 1 : -1;
   // })
@@ -65,7 +65,10 @@ for(let rowsCount = 0 ; rowsCount<199;){
       }
     console.log(faker.fake(`{{image.imageUrl}}`));
     this.rowData= this.dataset;
-    Object.keys(this.dataset[0]).forEach(header => {
+    Object.keys(this.dataset[0]).forEach((header,index) => {
+      if (index <1){
+        this.columnDefs.push({headerName: header, field: header, width: 60, sortable: false, autoHeight: true, cellRendererFramework: AppImageFormatterCellComponent});
+      }else 
       this.columnDefs.push({headerName: header, field: header});
     })
     console.log(this.columnDefs);
