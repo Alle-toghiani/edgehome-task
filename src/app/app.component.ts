@@ -15,14 +15,19 @@ export class AppComponent implements OnInit {
 
   ngOnInit(){
 
-  this.generateAndCleanColumnNames();
+    let localDataset = JSON.parse(localStorage.getItem('edgeHome'));
+    if (!localDataset){
+      this.generateAndCleanColumnNames();
 
-  this.generateJson();
+      this.generateJson();
+    }else {
+      this.dataset = localDataset;
+    }
 
   this.initiateGridValues();
   }
 
-  
+
   generateJson(): void{
     let exitLoop = false;
     for(let rowsCount = 0 ; rowsCount<199;){
@@ -52,6 +57,8 @@ export class AppComponent implements OnInit {
               break;
           }
       }
+
+      localStorage.setItem('edgeHome', JSON.stringify(this.dataset));
   }
 
   generateAndCleanColumnNames(){
